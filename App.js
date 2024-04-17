@@ -10,7 +10,11 @@ import UserRoutes from "./Users/routes.js";
 import session from "express-session";
 import "dotenv/config";
 
-mongoose.connect("mongodb://127.0.0.1:27017/kanbas");
+const CONNECTION_STRING =
+  process.env.DB_CONNECTION_STRING || "mongodb://127.0.0.1:27017/kanbas";
+console.log(CONNECTION_STRING);
+mongoose.connect(CONNECTION_STRING);
+
 console.log("mongodb connected");
 const app = express();
 
