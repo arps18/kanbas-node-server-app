@@ -8,6 +8,7 @@ import ModuleRoutes from "./Kanbas/Module/routes.js";
 import AssignmentRoutes from "./Kanbas/Assignments/router.js";
 import cors from "cors";
 mongoose.connect("mongodb://127.0.0.1:27017/kanbas");
+console.log("Mongodb connected!");
 const app = express();
 
 app.use(cors());
