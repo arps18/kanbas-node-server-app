@@ -1,3 +1,4 @@
+import "dotenv/config";
 import express from "express";
 import mongoose from "mongoose";
 import Hello from "./Hello.js";
@@ -8,7 +9,6 @@ import ModuleRoutes from "./Kanbas/Module/routes.js";
 import AssignmentRoutes from "./Kanbas/Assignments/router.js";
 import UserRoutes from "./Users/routes.js";
 import session from "express-session";
-import "dotenv/config";
 
 const CONNECTION_STRING =
   process.env.DB_CONNECTION_STRING || "mongodb://127.0.0.1:27017/kanbas";
@@ -37,7 +37,20 @@ if (process.env.NODE_ENV !== "development") {
     domain: process.env.HTTP_SERVER_DOMAIN,
   };
 }
-app.use(session(sessionOptions));
+// app.use(session(sessionOptions));
+app.use(
+  session({
+    secret: "keyboard cat",
+    resave: false,
+    saveUninitialized: false,
+    proxy: true,
+    cookie: {
+      sameSite: "none",
+      secure: true,
+      domain: "kanbas-node-server-app.onrender.com",
+    },
+  })
+);
 
 app.use(express.json());
 AssignmentRoutes(app);
